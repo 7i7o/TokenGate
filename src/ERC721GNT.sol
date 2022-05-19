@@ -99,7 +99,8 @@ contract ERC721GNT is ERC165, IERC721, IERC721Metadata {
      */
     function balanceOf(address _owner) external view virtual override returns (uint256) {
         if (_owner == address(0x0)) revert ZeroAddressQuery();
-        return (_owners[_owner] ? 1 : 0);
+        if (_owners[_owner]) return 1;
+        return 0;
     }
 
     /** @notice Finds the owner of an NFT
@@ -180,7 +181,8 @@ contract ERC721GNT is ERC165, IERC721, IERC721Metadata {
      *  @return bool true if token exists, false otherwise
      */
     function _exists(uint256 _tokenId) internal view virtual returns (bool) {
-        return _owners[(address(uint160(_tokenId)))] && _tokenId != 0;
+        if (uint160(_tokenId) == 0) return false;
+        return _owners[address(uint160(_tokenId))];
     }
 
     /** @dev Mints and transfers a token to `_to`
@@ -195,8 +197,9 @@ contract ERC721GNT is ERC165, IERC721, IERC721Metadata {
         if (_owners[_to]) revert AlreadyOwnsToken(_to);
         _owners[_to] = true;
         emit Transfer(address(0x0), _to, uint256(uint160(_to)));
-        if (!_isOnERC721ReceivedOk(address(0x0), _to, uint256(uint160(_to)), ''))
+        if (!_isOnERC721ReceivedOk(address(0x0), _to, uint256(uint160(_to)), '')) {
             revert OnERC721ReceivedNotOk(_to);
+        }
     }
 
     /** @dev Burns or destroys an NFT with `_tokenId`
@@ -227,7 +230,6 @@ contract ERC721GNT is ERC165, IERC721, IERC721Metadata {
         try IERC721TokenReceiver(_to).onERC721Received(msg.sender, _from, _tokenId, data) returns (bytes4 retval) {
             return retval == IERC721TokenReceiver.onERC721Received.selector;
         } catch (bytes memory errorMessage) {
-
             // if we don't get a message, revert with custom error
             if (errorMessage.length == 0) revert OnERC721ReceivedNotOk(_to);
             
