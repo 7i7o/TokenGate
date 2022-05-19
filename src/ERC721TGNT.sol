@@ -14,7 +14,7 @@ import './interfaces/extensions/IERC721Metadata.sol';
  *  @dev By token gating, we optimize for 1 NFT per wallet (as a specific use case)
  *       NFT - Wallet is 1 to 1, so the address is used as tokenId
  */
-contract ERC721GNT is ERC165, IERC721, IERC721Metadata {
+contract ERC721TGNT is ERC165, IERC721, IERC721Metadata {
 
     /** A name for the NFTs in the contract
      */
