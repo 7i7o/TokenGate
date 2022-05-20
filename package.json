@@ -1,7 +1,7 @@
 {
   "name": "@7i7o/tokengate",
   "description": "ERC721 Non-Transferable implementation for Token Gating",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "files": [
     "/src/*",
     "!/lib/*",
