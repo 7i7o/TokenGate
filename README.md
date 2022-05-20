@@ -87,6 +87,9 @@ The results of gas spent in each test for each contract can be seen in the table
 That's roughly **45%** gas saving on both **deploy** and **mint**.
 
 
+## Example of deployment
+
+To see an example of usage, the contract has been inherited and deployed on Polygon Mainnet, with the address [`0x0c6c2a028ab0fcb9e60f82ce14703eef40d15a48`](https://polygonscan.com/address/0x0c6c2a028ab0fcb9e60f82ce14703eef40d15a48#code) 
 
 
 
