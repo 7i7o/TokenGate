@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: MIT
-pragma solidity 0.8.11;
+pragma solidity ^0.8.0;
 
 import './ERC165.sol';
 import './interfaces/IERC721.sol';
@@ -73,13 +73,13 @@ contract ERC721TGNT is ERC165, IERC721, IERC721Metadata {
 
     /** @notice A descriptive name for a collection of NFTs in this contract
      */
-    function name() external view virtual override returns (string memory) {
+    function name() public view virtual override returns (string memory) {
         return _name;
     }
 
     /** @notice An abbreviated name for NFTs in this contract
      */
-    function symbol() external view virtual override returns (string memory) {
+    function symbol() public view virtual override returns (string memory) {
         return _symbol;
     }
 
@@ -87,7 +87,7 @@ contract ERC721TGNT is ERC165, IERC721, IERC721Metadata {
      *  @dev Throws if `_tokenId` is not a valid NFT
      *       Empty by default, can be overridden in child contracts.
      */
-    function tokenURI(uint256 _tokenId) external view virtual override returns (string memory) {
+    function tokenURI(uint256 _tokenId) public view virtual override returns (string memory) {
         if (!_exists(_tokenId)) revert NonExistentTokenId(_tokenId);
         return "";
     }
@@ -97,7 +97,7 @@ contract ERC721TGNT is ERC165, IERC721, IERC721Metadata {
      *  @param _owner Address that the balance queried
      *  @return Number of NFTs owned (0 or 1)
      */
-    function balanceOf(address _owner) external view virtual override returns (uint256) {
+    function balanceOf(address _owner) public view virtual override returns (uint256) {
         if (_owner == address(0x0)) revert ZeroAddressQuery();
         if (_owners[_owner]) return 1;
         return 0;
@@ -108,7 +108,7 @@ contract ERC721TGNT is ERC165, IERC721, IERC721Metadata {
      *  @param _tokenId The identifier for an NFT
      *  @return The address of the owner of the NFT
      */
-    function ownerOf(uint256 _tokenId) external view virtual override returns (address) {
+    function ownerOf(uint256 _tokenId) public view virtual override returns (address) {
         if (!_exists(_tokenId)) revert NonExistentTokenId(_tokenId);
         return (address(uint160(_tokenId)));
     }
@@ -117,7 +117,7 @@ contract ERC721TGNT is ERC165, IERC721, IERC721Metadata {
      *  @dev Throws always, (Non-Transferable token)
      *       Emits a {Transfer} event
      */
-    function safeTransferFrom(address, address, uint256, bytes memory) external virtual override {
+    function safeTransferFrom(address, address, uint256, bytes memory) public virtual override {
         revert TransferAndApprovalsDisabled();
     }
 
@@ -125,7 +125,7 @@ contract ERC721TGNT is ERC165, IERC721, IERC721Metadata {
      *  @dev This works identically to the other function with an extra data parameter,
      *       except this function just sets data to "".
      */
-    function safeTransferFrom(address, address, uint256) external virtual override {
+    function safeTransferFrom(address, address, uint256) public virtual override {
         revert TransferAndApprovalsDisabled();
     }
 
@@ -136,7 +136,7 @@ contract ERC721TGNT is ERC165, IERC721, IERC721Metadata {
      *       Emits a {Transfer} event
      *  Emits a {Transfer} event
      */
-    function transferFrom(address, address, uint256) external virtual override {
+    function transferFrom(address, address, uint256) public virtual override {
         revert TransferAndApprovalsDisabled();
     }
 
@@ -144,7 +144,7 @@ contract ERC721TGNT is ERC165, IERC721, IERC721Metadata {
      *  @dev Throws always, (Non-Transferable token)
      *       Emits a {Approval} event
      */
-    function approve(address, uint256) external virtual override {
+    function approve(address, uint256) public virtual override {
         revert TransferAndApprovalsDisabled();
     }
 
@@ -153,7 +153,7 @@ contract ERC721TGNT is ERC165, IERC721, IERC721Metadata {
      *  @dev Throws always, (Non-Transferable token)
      *       Emits a {ApprovalForAll} event
     */
-    function setApprovalForAll(address, bool) external virtual override {
+    function setApprovalForAll(address, bool) public virtual override {
         revert TransferAndApprovalsDisabled();
     }
 
@@ -162,7 +162,7 @@ contract ERC721TGNT is ERC165, IERC721, IERC721Metadata {
      *  @param _tokenId The NFT to find the approved address for
      *  @return The zero address, because Approvals are disabled
      */
-    function getApproved(uint256 _tokenId) external view virtual override returns (address) {
+    function getApproved(uint256 _tokenId) public view virtual override returns (address) {
         if (!_exists(_tokenId)) revert NonExistentTokenId(_tokenId);
         return address(0x0);
     }
@@ -170,7 +170,7 @@ contract ERC721TGNT is ERC165, IERC721, IERC721Metadata {
     /** @notice Query if an address is an authorized operator for another address
      *  @return False, because approvalForAll is disabled
      */
-    function isApprovedForAll(address, address) external view virtual override returns (bool) {
+    function isApprovedForAll(address, address) public view virtual override returns (bool) {
         return false;
     }
 
@@ -200,6 +200,16 @@ contract ERC721TGNT is ERC165, IERC721, IERC721Metadata {
         if (!_isOnERC721ReceivedOk(address(0x0), _to, uint256(uint160(_to)), '')) {
             revert OnERC721ReceivedNotOk(_to);
         }
+    }
+
+    /** @dev This is provided for OpenZeppelin's compatibility
+     *       It has the same functionality as {_safeMint}
+     *  @param _to Address to mint the token to
+     *         2nd param is (uint256) IS IGNORED - It just mints
+     *         to the Id: uint256(uint160(_to))
+     */
+    function _safeMint(address _to, uint256) internal virtual {
+        _safeMint(_to);
     }
 
     /** @dev Burns or destroys an NFT with `_tokenId`

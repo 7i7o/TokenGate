@@ -1,0 +1,34 @@
+{
+  "name": "@7i7o/tokengate",
+  "description": "ERC721 Non-Transferable implementation for Token Gating",
+  "version": "1.0.1",
+  "files": [
+    "/src/*",
+    "!/lib/*",
+    "!/test/*"
+  ],"directories": {
+    "src": "src"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/7i7o/TokenGate.git"
+  },
+  "keywords": [
+    "solidity",
+    "ethereum",
+    "smart",
+    "contracts",
+    "NFT",
+    "Gating",
+    "7i7o"
+  ],
+  "author": "@7i7o",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/7i7o/TokenGate/issues"
+  },
+  "homepage": "https://github.com/7i7o/TokenGate#readme"
+}

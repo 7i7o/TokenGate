@@ -1,0 +1,11 @@
+_old
+cache/
+lib/
+out/
+test/
+foundry.toml
+remappings.txt
+
+.env
+.env*
+

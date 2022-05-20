@@ -12,28 +12,37 @@ Since the objective of token gating is allowing access of an address by checking
 
 This implementation aims to provide a way for users and developers to take advantage of this and saving gas by inheriting it.
 
-## Getting Started
-
 This project was developed using the [Foundry](getfoundry.sh) smart contract development toolchain.
+## Installing
 
-Install Foundry on your local develepment environment, or just copy the contracts to a local Hardhat/Truffle project and inherit them from your NFT contract.
+### npm
 
-To install on a Forge project just run:
+If you use npm, you can install by running: 
 
 ```bash
-forge install 7i7o/custom-nft
+npm i @7i7o/tokengate
+```
+
+### Foundry
+
+If you are using Foundry (or Forge)just run:
+
+```bash
+forge install 7i7o/TokenGate
 ```
 
 and add a line in your remappings.txt file (it should sit on your main project folder) with:
 
 ```
-7i7o/=lib/custom-nft/src
+@7i7o/tokengate=lib/TokenGate/
 ```
+
+## Usage
 
 Now you can import it in your solidity files like this:
 
 ```solidity
-import "7i7o/ERC721TGNT.sol";
+import "@7i7o/tokengate/src/ERC721TGNT.sol";
 ```
 
 To inherit this, you need to implement the contructor on your contract and pass a `Name` and a `Symbol` for your NFTs, like this:
@@ -65,4 +74,6 @@ forge test
 
 
 ___
-@7i7o - MIT License - May 2022
+MIT License
+
+Copyright (c) 2022 7i7o
