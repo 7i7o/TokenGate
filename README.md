@@ -71,6 +71,23 @@ to build, run:
 forge test
 ```
 
+## Gas Comparison
+
+To have a estimate of gas savings for users and deployers, i ran basic tests deploying a basic contract that inherited OpenZeppelin's ERC721 and another set that inherited ERC721TGNT, both exposing basic _safeMint functionality.
+
+I ran one test for creating a new contract, and another to create the contract and mint 1 token (to measure only minting gas).
+
+The results of gas spent in each test for each contract can be seen in the table below
+
+| Function      |     TGNT      | OpenZeppelin  |  % Gas Saved by TGNT |
+| ------------- |--------------:| -------------:|---------------------:|
+| `deploy`      |        649500 |       1168364 |               44.41% |
+| `safeMint`    |         26930 |         49462 |               45.55% |
+
+That's roughly **45%** gas saving on both **deploy** and **mint**.
+
+
+
 
 
 ___

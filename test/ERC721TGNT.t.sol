@@ -17,8 +17,8 @@ error AlreadyOwnsToken();
  */
 contract ERC72TGNTTest is Test, IERC721TokenReceiver {
 
-/** @dev An instance of a contract that inherits ERC721TGNT and exposes internal functions to test */
-ERC721TGNTTester private nftTester;
+    /** @dev An instance of a contract that inherits ERC721TGNT and exposes internal functions to test */
+    ERC721TGNTTester private nftTester;
 
     /** @dev Initialize variables for testing. Run before each test */
     function setUp() public {
@@ -29,7 +29,7 @@ ERC721TGNTTester private nftTester;
     function testConstructor() public {
         assertTrue(keccak256(abi.encodePacked(nftTester.name())) == keccak256(abi.encodePacked(CONTRACT_NAME)));
         assertTrue(keccak256(abi.encodePacked(nftTester.symbol())) == keccak256(abi.encodePacked(CONTRACT_SYMBOL)));
-        assertTrue(nftTester.balanceOf(msg.sender) == 0);
+        assertTrue(nftTester.balanceOf(address(this)) == 0);
     }
 
     /** @dev Test minting an NFT to self */
@@ -131,6 +131,7 @@ ERC721TGNTTester private nftTester;
         vm.expectRevert(abi.encodeWithSelector(ERC721TGNT.OnERC721ReceivedNotOk.selector,address(nftTester)));
         nftTester.safeMint();
     }
+
 
 
     /** @dev Implementation of IERC721TokenReceiver
